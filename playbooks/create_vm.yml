@@ -1,0 +1,11 @@
+---
+- name: create hetzner machine
+  hcloud_server:
+    name: "{{ item }}"
+    server_type: "{{ hetzner_server_type }}"
+    image: "{{ hetzner_image }}"
+    datacenter: "{{ hetzner_datacenter }}"
+    api_token: "{{ hetzner_api_token }}"
+    ssh_keys:
+      - "{{ hetzner_ssh_key_name }}"
+    state: present

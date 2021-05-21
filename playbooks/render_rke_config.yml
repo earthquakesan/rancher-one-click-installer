@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  tasks:
+  - name: render cluster.yml.yml into ../rke dir
+    template:
+      src: "cluster.yml.j2"
+      dest: "../rke/cluster.yml"

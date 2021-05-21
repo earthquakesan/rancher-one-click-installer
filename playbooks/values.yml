@@ -1,0 +1,40 @@
+---
+# Hetzner Setup
+hetzner_api_token: "{{ lookup('env','HETZNER_API_TOKEN') }}"
+hetzner_server_type: "cx31"
+hetzner_image: "debian-10"
+hetzner_datacenter: "nbg1-dc3"
+hetzner_ssh_key_name: "rancher"
+hetzner_ssh_key_string: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+hetzner_vm_name_prefix: "k8s"
+
+# Debian 10 Setup
+vm_server_timezone: "Europe/Berlin"
+vm_required_packages:
+# Required by docker
+- apt-transport-https
+- ca-certificates
+- curl
+- gnupg-agent
+- software-properties-common
+# For time synchronization
+- ntp
+# Command line tools for debugging
+- htop
+- iotop
+- vim
+# Optional tools
+#- zip
+#- unzip
+#- zsh
+#- git
+#- make
+#- rsync
+vm_docker_packages:
+# latest 20.03 is not supported for kubespray or rke
+- docker-ce=5:19.03.14~3-0~debian-buster
+- docker-ce-cli
+- containerd.io
+
+# RKE Setup
+rke_kubernetes_version: "v1.20.6-rancher1-1"

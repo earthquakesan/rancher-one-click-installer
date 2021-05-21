@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: destroy hetzner machine
+      hcloud_server:
+        name: "{{ item }}"
+        api_token: "{{ hetzner_api_token }}"
+        state: absent
+      loop:
+        - k8s-1
+        - k8s-2
+        - k8s-3

@@ -1,0 +1,30 @@
+---
+- hosts: rancher
+  vars:
+    ansible_user: "root"
+  tasks:
+  - name: apt-get update
+    apt:
+      update_cache: yes
+  - name: install necessary packages {{ vm_required_packages }}
+    apt:
+      name: "{{ item }}"
+    loop: "{{ vm_required_packages }}" 
+  - name: set timezone to {{ vm_server_timezone }}
+    community.general.timezone:
+      name: "{{ vm_server_timezone }}"
+  - name: Add an apt key for docker-ce (debian)
+    apt_key:
+      url: https://download.docker.com/linux/debian/gpg
+      state: present
+  - name: get release name
+    command: lsb_release -cs
+    register: release_name
+  - name: add docker repository to apt (debian)
+    apt_repository:
+      repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ release_name.stdout }} stable"
+      state: present
+  - name: install docker packages
+    apt:
+      name: "{{ item }}"
+    loop: "{{ vm_docker_packages }}"

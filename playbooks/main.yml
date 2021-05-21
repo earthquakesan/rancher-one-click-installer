@@ -1,0 +1,19 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Create rancher ssh key
+    hcloud_ssh_key:
+      name: "{{ hetzner_ssh_key_name }}"
+      public_key: "{{ hetzner_ssh_key_string }}"
+      api_token: "{{ hetzner_api_token }}"
+      state: present
+
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: create VMs 
+      include_tasks: create_vm.yml
+      loop:
+        - "{{ hetzner_vm_name_prefix }}-1"
+        - "{{ hetzner_vm_name_prefix }}-2"
+        - "{{ hetzner_vm_name_prefix }}-3"

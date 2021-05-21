@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  tasks:
+  - name: render hosts.hcloud.yml into ../inventory dir
+    template:
+      src: "hosts.hcloud.yml.j2"
+      dest: "../inventory/hosts.hcloud.yml"

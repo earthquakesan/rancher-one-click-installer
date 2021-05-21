@@ -1,0 +1,37 @@
+ssh_agent_auth: true
+cluster_name: cluster.local
+name: cluster.local
+enable_cluster_alerting: true
+enable_cluster_monitoring: true
+ignore_docker_version: true
+
+kubernetes_version: {{ rke_kubernetes_version }}
+
+nodes:
+{% for host in groups['rancher'] %}
+  - address: {{ hostvars[host].ipv4 }}
+    user: root
+    labels:
+      worker: yes
+    role: [controlplane, worker, etcd]
+{% endfor %}
+
+services:
+  etcd:
+    snapshot: true
+    creation: 6h
+    retention: 30h
+  kube-controller:
+    extra_args:
+      terminated-pod-gc-threshold: 100
+  kubelet:
+    extra_args:
+      max-pods: 250
+
+ingress:
+  provider: nginx
+  options:
+    use-forwarded-headers: "true"
+
+monitoring:
+  provider: "metrics-server"
