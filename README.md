@@ -7,12 +7,11 @@ Install Rancher in Hetzner Cloud with one command.
 The following software has to be installed on your machine:
 
 * [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
-* [Hetzner cloud token](https://docs.hetzner.cloud/)
 * [RKE](https://github.com/rancher/rke/releases)
 * [hetznerdns](https://github.com/earthquakesan/hetznerdns-py)
 
 I assume, that you have created a project inside Hetzner cloud account and an API token for that project.
-I also assume that you are using Hetzner DNS.
+I also assume that you are using Hetzner DNS and have a token for it.
 
 ## Defaults and Costs
 
